@@ -1,0 +1,27 @@
+{
+    "id": "9B70A92B",
+    "path": "~/DAalgorithms/Scripts/Normalization.R",
+    "project_path": "Scripts/Normalization.R",
+    "type": "r_source",
+    "hash": "3806785064",
+    "contents": "",
+    "dirty": false,
+    "created": 1718865839924.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "tempName": "Untitled1",
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "25,1",
+        "scrollLine": "14"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1718869713,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1718869713928,
+    "read_only": false,
+    "read_only_alternatives": []
+}
