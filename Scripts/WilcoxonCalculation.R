@@ -1,6 +1,7 @@
 # Calculating wilcoxon results
 rm(list = ls())
 library(MetagenomeTools)
+library(coin)
 
 # RDP
 rm(list = ls())
