@@ -59,5 +59,5 @@ for (file in all_files) {
 
   results<-calcTtest(countsT, meta)
 
-  write.table(results, paste0("PkgResults/dada2/ttest/", gsub(basename(file), pattern=".txt$", replacement=""), "_t.txt"), sep = "\t", row.names = T)
+  write.table(results, paste0("PkgResults/WGS/ttest/", gsub(basename(file), pattern=".txt$", replacement=""), "_t.txt"), sep = "\t", row.names = T)
 }
