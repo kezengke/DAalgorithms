@@ -15,14 +15,14 @@ for (file in all_files) {
 
 # normalize DADA2 countsT
 rm(list = ls())
-all_files<-list.files("CountsTables/dadaRaw", pattern = "*.txt",full.names = TRUE)
+all_files<-list.files("CountsTables/dada2Raw", pattern = "*.txt",full.names = TRUE)
 
 for (file in all_files) {
 
   countsT<-read.table(file, sep = "\t", header = T, row.names = 1)
   normT<-normFun(countsT)
 
-  write.table(normT, paste0("CountsTables/dadaNorm/", basename(file)), sep = "\t", row.names = T)
+  write.table(normT, paste0("CountsTables/dada2Norm/", basename(file)), sep = "\t", row.names = T)
 }
 
 # normalize wgs countsT

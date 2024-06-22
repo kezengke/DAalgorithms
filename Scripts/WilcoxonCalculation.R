@@ -60,5 +60,5 @@ for (file in all_files) {
 
   results<-calcWilcox(countsT, meta)
 
-  write.table(results, paste0("PkgResults/dada2/Wilcoxon/", gsub(basename(file), pattern=".txt$", replacement=""), "_wilcox.txt"), sep = "\t", row.names = T)
+  write.table(results, paste0("PkgResults/WGS/Wilcoxon/", gsub(basename(file), pattern=".txt$", replacement=""), "_wilcox.txt"), sep = "\t", row.names = T)
 }
