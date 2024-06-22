@@ -60,5 +60,5 @@ for (file in all_files) {
 
   results<-calcDESeq2(countsT, meta)
 
-  write.table(results, paste0("PkgResults/dada2/DESeq2/", gsub(basename(file), pattern=".txt$", replacement=""), "_deseq2.txt"), sep = "\t", row.names = T)
+  write.table(results, paste0("PkgResults/WGS/DESeq2/", gsub(basename(file), pattern=".txt$", replacement=""), "_deseq2.txt"), sep = "\t", row.names = T)
 }

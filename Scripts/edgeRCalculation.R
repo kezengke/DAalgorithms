@@ -60,5 +60,5 @@ for (file in all_files) {
 
   results<-calcEdgeR(countsT, meta)
 
-  write.table(results, paste0("PkgResults/dada2/edgeR/", gsub(basename(file), pattern=".txt$", replacement=""), "_edgeR.txt"), sep = "\t", row.names = T)
+  write.table(results, paste0("PkgResults/WGS/edgeR/", gsub(basename(file), pattern=".txt$", replacement=""), "_edgeR.txt"), sep = "\t", row.names = T)
 }
