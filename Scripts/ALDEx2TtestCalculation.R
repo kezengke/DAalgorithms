@@ -1,7 +1,7 @@
-# Calculating edgeR results
+# Calculating ALDEx2 results
 rm(list = ls())
 library(MetagenomeTools)
-library(edgeR)
+library(ALDEx2)
 
 # RDP
 rm(list = ls())
@@ -18,14 +18,20 @@ for (file in all_files) {
   rownames(meta)<-colnames(countsT)
   colnames(meta)<-"conditions"
 
-  results<-calcEdgeR(countsT, meta)
+  results<-calcALDEx2Ttest(countsT, meta)
 
-  write.table(results, paste0("PkgResults/RDP/edgeR/", gsub(basename(file), pattern=".txt$", replacement=""), "_edgeR.txt"), sep = "\t", row.names = T)
+  save_dir<-"PkgResults/RDP/ALDEx2ttest/"
+  if (file.exists(file.path(save_dir))){
+    write.table(results, paste0(file.path(save_dir), gsub(basename(file), pattern=".txt$", replacement=""), "_ALDEx2T.txt"), sep = "\t", row.names = T)
+  } else {
+    dir.create(file.path(save_dir))
+    write.table(results, paste0(file.path(save_dir), gsub(basename(file), pattern=".txt$", replacement=""), "_ALDEx2T.txt"), sep = "\t", row.names = T)
+  }
 }
 
-# dada2
+# DADA2
 rm(list = ls())
-all_files<-list.files("CountsTables/dada2Raw", pattern = "*.txt",full.names = TRUE)
+all_files<-list.files("CountsTables/DADA2Raw", pattern = "*.txt",full.names = TRUE)
 
 for (file in all_files) {
   countsT<-read.table(file, sep = "\t", header = T, row.names = 1, check.names = F)
@@ -38,9 +44,15 @@ for (file in all_files) {
   rownames(meta)<-colnames(countsT)
   colnames(meta)<-"conditions"
 
-  results<-calcEdgeR(countsT, meta)
+  results<-calcALDEx2Ttest(countsT, meta)
 
-  write.table(results, paste0("PkgResults/dada2/edgeR/", gsub(basename(file), pattern=".txt$", replacement=""), "_edgeR.txt"), sep = "\t", row.names = T)
+  save_dir<-"PkgResults/DADA2/ALDEx2ttest/"
+  if (file.exists(file.path(save_dir))){
+    write.table(results, paste0(file.path(save_dir), gsub(basename(file), pattern=".txt$", replacement=""), "_ALDEx2T.txt"), sep = "\t", row.names = T)
+  } else {
+    dir.create(file.path(save_dir))
+    write.table(results, paste0(file.path(save_dir), gsub(basename(file), pattern=".txt$", replacement=""), "_ALDEx2T.txt"), sep = "\t", row.names = T)
+  }
 }
 
 # WGS
@@ -58,9 +70,15 @@ for (file in all_files) {
   rownames(meta)<-colnames(countsT)
   colnames(meta)<-"conditions"
 
-  results<-calcEdgeR(countsT, meta)
+  results<-calcALDEx2Ttest(countsT, meta)
 
-  write.table(results, paste0("PkgResults/WGS/edgeR/", gsub(basename(file), pattern=".txt$", replacement=""), "_edgeR.txt"), sep = "\t", row.names = T)
+  save_dir<-"PkgResults/WGS/ALDEx2ttest/"
+  if (file.exists(file.path(save_dir))){
+    write.table(results, paste0(file.path(save_dir), gsub(basename(file), pattern=".txt$", replacement=""), "_ALDEx2T.txt"), sep = "\t", row.names = T)
+  } else {
+    dir.create(file.path(save_dir))
+    write.table(results, paste0(file.path(save_dir), gsub(basename(file), pattern=".txt$", replacement=""), "_ALDEx2T.txt"), sep = "\t", row.names = T)
+  }
 }
 
 # RNAseq
@@ -78,9 +96,13 @@ for (file in all_files) {
   rownames(meta)<-colnames(countsT)
   colnames(meta)<-"conditions"
 
-  results<-calcEdgeR(countsT, meta)
+  results<-calcALDEx2Ttest(countsT, meta)
 
-  write.table(results, paste0("PkgResults/RNAseq/edgeR/", gsub(basename(file), pattern=".txt$", replacement=""), "_edgeR.txt"), sep = "\t", row.names = T)
+  save_dir<-"PkgResults/RNAseq/ALDEx2ttest/"
+  if (file.exists(file.path(save_dir))){
+    write.table(results, paste0(file.path(save_dir), gsub(basename(file), pattern=".txt$", replacement=""), "_ALDEx2T.txt"), sep = "\t", row.names = T)
+  } else {
+    dir.create(file.path(save_dir))
+    write.table(results, paste0(file.path(save_dir), gsub(basename(file), pattern=".txt$", replacement=""), "_ALDEx2T.txt"), sep = "\t", row.names = T)
+  }
 }
-
-

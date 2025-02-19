@@ -36,3 +36,16 @@ for (file in all_files) {
 
   write.table(normT, paste0("CountsTables/WGSNorm/", basename(file)), sep = "\t", row.names = T)
 }
+
+# normalize RNAseq countsT
+rm(list = ls())
+all_files<-list.files("CountsTables/RNAseqRaw", pattern = "*.txt",full.names = TRUE)
+
+for (file in all_files) {
+
+  countsT<-read.table(file, sep = "\t", header = T, row.names = 1, check.names = F)
+  normT<-normFun(countsT)
+
+  write.table(normT, paste0("CountsTables/RNAseqNorm/", basename(file)), sep = "\t", row.names = T)
+}
+

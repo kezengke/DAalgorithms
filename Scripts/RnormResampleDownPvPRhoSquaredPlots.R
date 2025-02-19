@@ -28,8 +28,8 @@ for (file in all_files) {
   for (m in times) {
     newT<-resampleRNORM(countsT, meta, m)
     dRES<-read.table(paste0("PkgResults/RDP/DESeq2/", name, "_deseq2.txt"), header = T, row.names = 1)
-
-    tRES<-calcTtest(newT, meta)
+    newTnorm<-normFun(newT)
+    tRES<-calcTtest2(newTnorm, meta)
     tRES<-na.omit(tRES)
     dRES<-dRES[rownames(tRES), , drop = F]
 
@@ -43,7 +43,7 @@ for (file in all_files) {
   p<-ggplot(data, aes(x = times, y = rho2)) +
     geom_point(color = "coral3", size = 3) +
     geom_smooth(method = "loess", alpha = 0.3, color = "gold2", fill = "gold2", se = TRUE) +
-    labs(x = "Multiple of variance", y = "rho-squared values", title = paste0("(RDP-", name, ") Resample of multiple var. vs. Rho-squared of Log10 p-value plots")) +
+    labs(x = "Multiple of variance", y = "rho-squared values", title = paste0("(RDP-", name, ") Resample of multiple var. vs. Rho-squared of \nLog10 p-value plots")) +
     theme_minimal() +
     theme(axis.text.x = element_text(angle = 45, hjust = 1),
           plot.title = element_text(size = rel(0.8))
@@ -75,7 +75,8 @@ for (file in all_files) {
     newT<-resampleRNORM(countsT, meta, m)
     dRES<-read.table(paste0("PkgResults/dada2/DESeq2/", name, "_deseq2.txt"), header = T, row.names = 1)
 
-    tRES<-calcTtest(newT, meta)
+    newTnorm<-normFun(newT)
+    tRES<-calcTtest2(newTnorm, meta)
     tRES<-na.omit(tRES)
     dRES<-dRES[rownames(tRES), , drop = F]
 
@@ -89,7 +90,7 @@ for (file in all_files) {
   p<-ggplot(data, aes(x = times, y = rho2)) +
     geom_point(color = "coral3", size = 3) +
     geom_smooth(method = "loess", alpha = 0.3, color = "gold2", fill = "gold2", se = TRUE) +
-    labs(x = "Multiple of variance", y = "rho-squared values", title = paste0("(dada2-", name, ") Resample of multiple var. vs. Rho-squared of Log10 p-value plots")) +
+    labs(x = "Multiple of variance", y = "rho-squared values", title = paste0("(dada2-", name, ") Resample of multiple var. vs. Rho-squared of \nLog10 p-value plots")) +
     theme_minimal() +
     theme(axis.text.x = element_text(angle = 45, hjust = 1),
           plot.title = element_text(size = rel(0.8))
@@ -121,7 +122,8 @@ for (file in all_files) {
     newT<-resampleRNORM(countsT, meta, m)
     dRES<-read.table(paste0("PkgResults/WGS/DESeq2/", name, "_deseq2.txt"), header = T, row.names = 1)
 
-    tRES<-calcTtest(newT, meta)
+    newTnorm<-normFun(newT)
+    tRES<-calcTtest2(newTnorm, meta)
     tRES<-na.omit(tRES)
     dRES<-dRES[rownames(tRES), , drop = F]
 
@@ -135,7 +137,7 @@ for (file in all_files) {
   p<-ggplot(data, aes(x = times, y = rho2)) +
     geom_point(color = "coral3", size = 3) +
     geom_smooth(method = "loess", alpha = 0.3, color = "gold2", fill = "gold2", se = TRUE) +
-    labs(x = "Multiple of variance", y = "rho-squared values", title = paste0("(WGS-", name, ") Resample of multiple var. vs. Rho-squared of Log10 p-value plots")) +
+    labs(x = "Multiple of variance", y = "rho-squared values", title = paste0("(WGS-", name, ") Resample of multiple var. vs. Rho-squared of \nLog10 p-value plots")) +
     theme_minimal() +
     theme(axis.text.x = element_text(angle = 45, hjust = 1),
           plot.title = element_text(size = rel(0.8))

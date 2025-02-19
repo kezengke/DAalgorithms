@@ -24,10 +24,10 @@ for (file in all_files) {
     newT<-resampleRNORM(countsT, meta, m)
     tRES<-BackTestTtest(countsT, newT, meta)
     dRES<-BackTestDESeq2(countsT, newT, meta)
-    p<-directPFun(tRES, dRES)
+    p<-cbind(tRES$pval, dRES$pval)
     colnames(p)<-c("X1", "X2")
     rownames(p)<-rownames(countsT)
-    write.table(p, paste0("ResampleDump/RDP/rnormUp/", name, "/x", m, "Resampled-P.txt"), sep = "\t", row.names = T)
+    write.table(p, paste0("ResampleDump/RDP/rnormRawP/", name, "/x", m, "Resampled-P.txt"), sep = "\t", row.names = T)
   }
 }
 
@@ -49,10 +49,10 @@ for (file in all_files) {
     newT<-resampleRNORM(countsT, meta, m)
     tRES<-BackTestTtest(countsT, newT, meta)
     dRES<-BackTestDESeq2(countsT, newT, meta)
-    p<-directPFun(tRES, dRES)
+    p<-cbind(tRES$pval, dRES$pval)
     colnames(p)<-c("X1", "X2")
     rownames(p)<-rownames(countsT)
-    write.table(p, paste0("ResampleDump/dada2/rnormUp/", name, "/x", m, "Resampled-P.txt"), sep = "\t", row.names = T)
+    write.table(p, paste0("ResampleDump/dada2/rnormRawP/", name, "/x", m, "Resampled-P.txt"), sep = "\t", row.names = T)
   }
 }
 
@@ -74,9 +74,9 @@ for (file in all_files) {
     newT<-resampleRNORM(countsT, meta, m)
     tRES<-BackTestTtest(countsT, newT, meta)
     dRES<-BackTestDESeq2(countsT, newT, meta)
-    p<-directPFun(tRES, dRES)
+    p<-cbind(tRES$pval, dRES$pval)
     colnames(p)<-c("X1", "X2")
     rownames(p)<-rownames(countsT)
-    write.table(p, paste0("ResampleDump/WGS/rnormUp/", name, "/x", m, "Resampled-P.txt"), sep = "\t", row.names = T)
+    write.table(p, paste0("ResampleDump/WGS/rnormRawP/", name, "/x", m, "Resampled-P.txt"), sep = "\t", row.names = T)
   }
 }
