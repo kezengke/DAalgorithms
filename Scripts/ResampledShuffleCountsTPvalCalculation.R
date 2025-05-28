@@ -32,26 +32,26 @@ for (file in all_files) {
   deseq2pvals<-c()
   edgerpvals<-c()
   for (i in 1:100) {
-    # resample
-    ResampledcountsT<-resampleRNORM(RawcountsT, meta, 1)
-
-    all_values <- as.vector(as.matrix(ResampledcountsT))
+    all_values <- as.vector(as.matrix(RawcountsT))
     shuffled_values <- sample(all_values)
-    shuffledCountsT <- matrix(shuffled_values, nrow = nrow(ResampledcountsT), ncol = ncol(ResampledcountsT))
+    shuffledCountsT <- matrix(shuffled_values, nrow = nrow(RawcountsT), ncol = ncol(RawcountsT))
     shuffledCountsT <- as.data.frame(shuffledCountsT)
 
-    rownames(shuffledCountsT) <- rownames(ResampledcountsT)
-    colnames(shuffledCountsT) <- colnames(ResampledcountsT)
+    # resample
+    ResampledcountsT<-resampleRNORM(shuffledCountsT, meta, 1)
 
-    NormCountsT<-normFun(shuffledCountsT)
+    rownames(ResampledcountsT) <- rownames(RawcountsT)
+    colnames(ResampledcountsT) <- colnames(RawcountsT)
+
+    NormCountsT<-normFun(ResampledcountsT)
 
     ttestresults<-calcTtest(NormCountsT, meta)
     ttestpvals<-cbind(ttestpvals, ttestresults$pval)
     wilcoxresults<-calcWilcox(NormCountsT, meta)
     wilcoxpvals<-cbind(wilcoxpvals, wilcoxresults$pval)
-    deseq2results<-calcDESeq2(shuffledCountsT, meta)
+    deseq2results<-calcDESeq2(ResampledcountsT, meta)
     deseq2pvals<-cbind(deseq2pvals, deseq2results$pval)
-    edgerresults<-calcEdgeR(shuffledCountsT, meta)
+    edgerresults<-calcEdgeR(ResampledcountsT, meta)
     edgerpvals<-cbind(edgerpvals, edgerresults$pval)
   }
 
@@ -119,26 +119,26 @@ for (file in all_files) {
   deseq2pvals<-c()
   edgerpvals<-c()
   for (i in 1:100) {
-    # resample
-    ResampledcountsT<-resampleRNORM(RawcountsT, meta, 1)
-
-    all_values <- as.vector(as.matrix(ResampledcountsT))
+    all_values <- as.vector(as.matrix(RawcountsT))
     shuffled_values <- sample(all_values)
-    shuffledCountsT <- matrix(shuffled_values, nrow = nrow(ResampledcountsT), ncol = ncol(ResampledcountsT))
+    shuffledCountsT <- matrix(shuffled_values, nrow = nrow(RawcountsT), ncol = ncol(RawcountsT))
     shuffledCountsT <- as.data.frame(shuffledCountsT)
 
-    rownames(shuffledCountsT) <- rownames(ResampledcountsT)
-    colnames(shuffledCountsT) <- colnames(ResampledcountsT)
+    # resample
+    ResampledcountsT<-resampleRNORM(shuffledCountsT, meta, 1)
 
-    NormCountsT<-normFun(shuffledCountsT)
+    rownames(ResampledcountsT) <- rownames(RawcountsT)
+    colnames(ResampledcountsT) <- colnames(RawcountsT)
+
+    NormCountsT<-normFun(ResampledcountsT)
 
     ttestresults<-calcTtest(NormCountsT, meta)
     ttestpvals<-cbind(ttestpvals, ttestresults$pval)
     wilcoxresults<-calcWilcox(NormCountsT, meta)
     wilcoxpvals<-cbind(wilcoxpvals, wilcoxresults$pval)
-    deseq2results<-calcDESeq2(shuffledCountsT, meta)
+    deseq2results<-calcDESeq2(ResampledcountsT, meta)
     deseq2pvals<-cbind(deseq2pvals, deseq2results$pval)
-    edgerresults<-calcEdgeR(shuffledCountsT, meta)
+    edgerresults<-calcEdgeR(ResampledcountsT, meta)
     edgerpvals<-cbind(edgerpvals, edgerresults$pval)
   }
 
@@ -206,26 +206,26 @@ for (file in all_files) {
   deseq2pvals<-c()
   edgerpvals<-c()
   for (i in 1:100) {
-    # resample
-    ResampledcountsT<-resampleRNORM(RawcountsT, meta, 1)
-
-    all_values <- as.vector(as.matrix(ResampledcountsT))
+    all_values <- as.vector(as.matrix(RawcountsT))
     shuffled_values <- sample(all_values)
-    shuffledCountsT <- matrix(shuffled_values, nrow = nrow(ResampledcountsT), ncol = ncol(ResampledcountsT))
+    shuffledCountsT <- matrix(shuffled_values, nrow = nrow(RawcountsT), ncol = ncol(RawcountsT))
     shuffledCountsT <- as.data.frame(shuffledCountsT)
 
-    rownames(shuffledCountsT) <- rownames(ResampledcountsT)
-    colnames(shuffledCountsT) <- colnames(ResampledcountsT)
+    # resample
+    ResampledcountsT<-resampleRNORM(shuffledCountsT, meta, 1)
 
-    NormCountsT<-normFun(shuffledCountsT)
+    rownames(ResampledcountsT) <- rownames(RawcountsT)
+    colnames(ResampledcountsT) <- colnames(RawcountsT)
+
+    NormCountsT<-normFun(ResampledcountsT)
 
     ttestresults<-calcTtest(NormCountsT, meta)
     ttestpvals<-cbind(ttestpvals, ttestresults$pval)
     wilcoxresults<-calcWilcox(NormCountsT, meta)
     wilcoxpvals<-cbind(wilcoxpvals, wilcoxresults$pval)
-    deseq2results<-calcDESeq2(shuffledCountsT, meta)
+    deseq2results<-calcDESeq2(ResampledcountsT, meta)
     deseq2pvals<-cbind(deseq2pvals, deseq2results$pval)
-    edgerresults<-calcEdgeR(shuffledCountsT, meta)
+    edgerresults<-calcEdgeR(ResampledcountsT, meta)
     edgerpvals<-cbind(edgerpvals, edgerresults$pval)
   }
 
@@ -293,26 +293,26 @@ for (file in all_files) {
   deseq2pvals<-c()
   edgerpvals<-c()
   for (i in 1:100) {
-    # resample
-    ResampledcountsT<-resampleRNORM(RawcountsT, meta, 1)
-
-    all_values <- as.vector(as.matrix(ResampledcountsT))
+    all_values <- as.vector(as.matrix(RawcountsT))
     shuffled_values <- sample(all_values)
-    shuffledCountsT <- matrix(shuffled_values, nrow = nrow(ResampledcountsT), ncol = ncol(ResampledcountsT))
+    shuffledCountsT <- matrix(shuffled_values, nrow = nrow(RawcountsT), ncol = ncol(RawcountsT))
     shuffledCountsT <- as.data.frame(shuffledCountsT)
 
-    rownames(shuffledCountsT) <- rownames(ResampledcountsT)
-    colnames(shuffledCountsT) <- colnames(ResampledcountsT)
+    # resample
+    ResampledcountsT<-resampleRNORM(shuffledCountsT, meta, 1)
 
-    NormCountsT<-normFun(shuffledCountsT)
+    rownames(ResampledcountsT) <- rownames(RawcountsT)
+    colnames(ResampledcountsT) <- colnames(RawcountsT)
+
+    NormCountsT<-normFun(ResampledcountsT)
 
     ttestresults<-calcTtest(NormCountsT, meta)
     ttestpvals<-cbind(ttestpvals, ttestresults$pval)
     wilcoxresults<-calcWilcox(NormCountsT, meta)
     wilcoxpvals<-cbind(wilcoxpvals, wilcoxresults$pval)
-    deseq2results<-calcDESeq2(shuffledCountsT, meta)
+    deseq2results<-calcDESeq2(ResampledcountsT, meta)
     deseq2pvals<-cbind(deseq2pvals, deseq2results$pval)
-    edgerresults<-calcEdgeR(shuffledCountsT, meta)
+    edgerresults<-calcEdgeR(ResampledcountsT, meta)
     edgerpvals<-cbind(edgerpvals, edgerresults$pval)
   }
 
