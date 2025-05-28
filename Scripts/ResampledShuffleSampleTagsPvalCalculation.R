@@ -1,6 +1,6 @@
 #shuffle sample tags 100x and test all pval distribution for resampled counts tables
 rm(list = ls())
-set.seed(9527)
+set.seed(123)
 library(MetagenomeTools)
 library(coin)
 library(DESeq2)
@@ -13,6 +13,13 @@ for (file in all_files) {
   name <- gsub(basename(file), pattern=".txt$", replacement="")
   RawcountsT<-read.table(paste0("CountsTables/RDPRaw/", name, ".txt"), sep = "\t", header = T, row.names = 1, check.names = F)
 
+  # Filter out low counts taxa
+  if (all(which(rowMeans(RawcountsT)<2) == 0)) {
+    RawcountsT<-RawcountsT
+  } else {
+    RawcountsT<-RawcountsT[-c(which(rowMeans(RawcountsT)<2)), , drop = F]
+  }
+
   meta<-read.table(paste0("MetaData/metadata_", gsub(basename(file), pattern=".txt$", replacement=""), ".txt"),
                    header = T, row.names = 1)
   meta<-meta[intersect(colnames(RawcountsT), rownames(meta)), , drop = F]
@@ -20,35 +27,34 @@ for (file in all_files) {
   rownames(meta)<-colnames(RawcountsT)
   colnames(meta)<-"conditions"
 
-  # resample
-  RawcountsT<-resampleRNORM(RawcountsT, meta, 1)
-  NormcountsT<-normFun(RawcountsT)
-
-  RawcountsT<-RawcountsT[, intersect(colnames(RawcountsT), rownames(meta)), drop = F]
-  NormcountsT<-NormcountsT[, intersect(colnames(NormcountsT), rownames(meta)), drop = F]
-
-
-
   ttestpvals<-c()
   wilcoxpvals<-c()
   deseq2pvals<-c()
   edgerpvals<-c()
   for (i in 1:100) {
+    # Shuffle sample tags
     shuffleMeta<-meta
     shuffleMeta$conditions<-sample(shuffleMeta$conditions)
+
+    # resample
+    ResampledcountsT<-resampleRNORM(RawcountsT, meta, 1)
+    NormcountsT<-normFun(ResampledcountsT)
+
+    ResampledcountsT<-ResampledcountsT[, intersect(colnames(ResampledcountsT), rownames(meta)), drop = F]
+    NormcountsT<-NormcountsT[, intersect(colnames(NormcountsT), rownames(meta)), drop = F]
 
     ttestresults<-calcTtest(NormcountsT, shuffleMeta)
     ttestpvals<-cbind(ttestpvals, ttestresults$pval)
     wilcoxresults<-calcWilcox(NormcountsT, shuffleMeta)
     wilcoxpvals<-cbind(wilcoxpvals, wilcoxresults$pval)
-    deseq2results<-calcDESeq2(RawcountsT, shuffleMeta)
+    deseq2results<-calcDESeq2(ResampledcountsT, shuffleMeta)
     deseq2pvals<-cbind(deseq2pvals, deseq2results$pval)
-    edgerresults<-calcEdgeR(RawcountsT, shuffleMeta)
+    edgerresults<-calcEdgeR(ResampledcountsT, shuffleMeta)
     edgerpvals<-cbind(edgerpvals, edgerresults$pval)
   }
 
-  rownames(ttestpvals)<-rownames(NormcountsT)
-  rownames(wilcoxpvals)<-rownames(NormcountsT)
+  rownames(ttestpvals)<-rownames(RawcountsT)
+  rownames(wilcoxpvals)<-rownames(RawcountsT)
   rownames(deseq2pvals)<-rownames(RawcountsT)
   rownames(edgerpvals)<-rownames(RawcountsT)
 
@@ -92,6 +98,13 @@ for (file in all_files) {
   name <- gsub(basename(file), pattern=".txt$", replacement="")
   RawcountsT<-read.table(paste0("CountsTables/dada2Raw/", name, ".txt"), sep = "\t", header = T, row.names = 1, check.names = F)
 
+  # Filter out low counts taxa
+  if (all(which(rowMeans(RawcountsT)<2) == 0)) {
+    RawcountsT<-RawcountsT
+  } else {
+    RawcountsT<-RawcountsT[-c(which(rowMeans(RawcountsT)<2)), , drop = F]
+  }
+
   meta<-read.table(paste0("MetaData/metadata_", gsub(basename(file), pattern=".txt$", replacement=""), ".txt"),
                    header = T, row.names = 1)
   meta<-meta[intersect(colnames(RawcountsT), rownames(meta)), , drop = F]
@@ -99,20 +112,19 @@ for (file in all_files) {
   rownames(meta)<-colnames(RawcountsT)
   colnames(meta)<-"conditions"
 
-  # resample
-  RawcountsT<-resampleRNORM(RawcountsT, meta, 1)
-  NormcountsT<-normFun(RawcountsT)
-
-  RawcountsT<-RawcountsT[, intersect(colnames(RawcountsT), rownames(meta)), drop = F]
-  NormcountsT<-NormcountsT[, intersect(colnames(NormcountsT), rownames(meta)), drop = F]
-
-
-
   ttestpvals<-c()
   wilcoxpvals<-c()
   deseq2pvals<-c()
   edgerpvals<-c()
   for (i in 1:100) {
+    # resample
+    ResampledcountsT<-resampleRNORM(RawcountsT, meta, 1)
+    NormcountsT<-normFun(ResampledcountsT)
+
+    ResampledcountsT<-ResampledcountsT[, intersect(colnames(ResampledcountsT), rownames(meta)), drop = F]
+    NormcountsT<-NormcountsT[, intersect(colnames(NormcountsT), rownames(meta)), drop = F]
+
+    # Shuffle sample tags
     shuffleMeta<-meta
     shuffleMeta$conditions<-sample(shuffleMeta$conditions)
 
@@ -120,14 +132,14 @@ for (file in all_files) {
     ttestpvals<-cbind(ttestpvals, ttestresults$pval)
     wilcoxresults<-calcWilcox(NormcountsT, shuffleMeta)
     wilcoxpvals<-cbind(wilcoxpvals, wilcoxresults$pval)
-    deseq2results<-calcDESeq2(RawcountsT, shuffleMeta)
+    deseq2results<-calcDESeq2(ResampledcountsT, shuffleMeta)
     deseq2pvals<-cbind(deseq2pvals, deseq2results$pval)
-    edgerresults<-calcEdgeR(RawcountsT, shuffleMeta)
+    edgerresults<-calcEdgeR(ResampledcountsT, shuffleMeta)
     edgerpvals<-cbind(edgerpvals, edgerresults$pval)
   }
 
-  rownames(ttestpvals)<-rownames(NormcountsT)
-  rownames(wilcoxpvals)<-rownames(NormcountsT)
+  rownames(ttestpvals)<-rownames(RawcountsT)
+  rownames(wilcoxpvals)<-rownames(RawcountsT)
   rownames(deseq2pvals)<-rownames(RawcountsT)
   rownames(edgerpvals)<-rownames(RawcountsT)
 
@@ -171,6 +183,13 @@ for (file in all_files) {
   name <- gsub(basename(file), pattern=".txt$", replacement="")
   RawcountsT<-read.table(paste0("CountsTables/WGSRaw/", name, ".txt"), sep = "\t", header = T, row.names = 1, check.names = F)
 
+  # Filter out low counts taxa
+  if (all(which(rowMeans(RawcountsT)<2) == 0)) {
+    RawcountsT<-RawcountsT
+  } else {
+    RawcountsT<-RawcountsT[-c(which(rowMeans(RawcountsT)<2)), , drop = F]
+  }
+
   meta<-read.table(paste0("MetaData/metadata_", gsub(basename(file), pattern=".txt$", replacement=""), ".txt"),
                    header = T, row.names = 1)
   meta<-meta[intersect(colnames(RawcountsT), rownames(meta)), , drop = F]
@@ -178,20 +197,19 @@ for (file in all_files) {
   rownames(meta)<-colnames(RawcountsT)
   colnames(meta)<-"conditions"
 
-  # resample
-  RawcountsT<-resampleRNORM(RawcountsT, meta, 1)
-  NormcountsT<-normFun(RawcountsT)
-
-  RawcountsT<-RawcountsT[, intersect(colnames(RawcountsT), rownames(meta)), drop = F]
-  NormcountsT<-NormcountsT[, intersect(colnames(NormcountsT), rownames(meta)), drop = F]
-
-
-
   ttestpvals<-c()
   wilcoxpvals<-c()
   deseq2pvals<-c()
   edgerpvals<-c()
   for (i in 1:100) {
+    # resample
+    ResampledcountsT<-resampleRNORM(RawcountsT, meta, 1)
+    NormcountsT<-normFun(ResampledcountsT)
+
+    ResampledcountsT<-ResampledcountsT[, intersect(colnames(ResampledcountsT), rownames(meta)), drop = F]
+    NormcountsT<-NormcountsT[, intersect(colnames(NormcountsT), rownames(meta)), drop = F]
+
+    # Shuffle sample tags
     shuffleMeta<-meta
     shuffleMeta$conditions<-sample(shuffleMeta$conditions)
 
@@ -199,14 +217,14 @@ for (file in all_files) {
     ttestpvals<-cbind(ttestpvals, ttestresults$pval)
     wilcoxresults<-calcWilcox(NormcountsT, shuffleMeta)
     wilcoxpvals<-cbind(wilcoxpvals, wilcoxresults$pval)
-    deseq2results<-calcDESeq2(RawcountsT, shuffleMeta)
+    deseq2results<-calcDESeq2(ResampledcountsT, shuffleMeta)
     deseq2pvals<-cbind(deseq2pvals, deseq2results$pval)
-    edgerresults<-calcEdgeR(RawcountsT, shuffleMeta)
+    edgerresults<-calcEdgeR(ResampledcountsT, shuffleMeta)
     edgerpvals<-cbind(edgerpvals, edgerresults$pval)
   }
 
-  rownames(ttestpvals)<-rownames(NormcountsT)
-  rownames(wilcoxpvals)<-rownames(NormcountsT)
+  rownames(ttestpvals)<-rownames(RawcountsT)
+  rownames(wilcoxpvals)<-rownames(RawcountsT)
   rownames(deseq2pvals)<-rownames(RawcountsT)
   rownames(edgerpvals)<-rownames(RawcountsT)
 
@@ -250,6 +268,13 @@ for (file in all_files) {
   name <- gsub(basename(file), pattern=".txt$", replacement="")
   RawcountsT<-read.table(paste0("CountsTables/RNAseqRaw/", name, ".txt"), sep = "\t", header = T, row.names = 1, check.names = F)
 
+  # Filter out low counts taxa
+  if (all(which(rowMeans(RawcountsT)<2) == 0)) {
+    RawcountsT<-RawcountsT
+  } else {
+    RawcountsT<-RawcountsT[-c(which(rowMeans(RawcountsT)<2)), , drop = F]
+  }
+
   meta<-read.table(paste0("MetaData/metadata_", gsub(basename(file), pattern=".txt$", replacement=""), ".txt"),
                    header = T, row.names = 1)
   meta<-meta[intersect(colnames(RawcountsT), rownames(meta)), , drop = F]
@@ -257,20 +282,19 @@ for (file in all_files) {
   rownames(meta)<-colnames(RawcountsT)
   colnames(meta)<-"conditions"
 
-  # resample
-  RawcountsT<-resampleRNORM(RawcountsT, meta, 1)
-  NormcountsT<-normFun(RawcountsT)
-
-  RawcountsT<-RawcountsT[, intersect(colnames(RawcountsT), rownames(meta)), drop = F]
-  NormcountsT<-NormcountsT[, intersect(colnames(NormcountsT), rownames(meta)), drop = F]
-
-
-
   ttestpvals<-c()
   wilcoxpvals<-c()
   deseq2pvals<-c()
   edgerpvals<-c()
   for (i in 1:100) {
+    # resample
+    ResampledcountsT<-resampleRNORM(RawcountsT, meta, 1)
+    NormcountsT<-normFun(ResampledcountsT)
+
+    ResampledcountsT<-ResampledcountsT[, intersect(colnames(ResampledcountsT), rownames(meta)), drop = F]
+    NormcountsT<-NormcountsT[, intersect(colnames(NormcountsT), rownames(meta)), drop = F]
+
+    # Shuffle sample tags
     shuffleMeta<-meta
     shuffleMeta$conditions<-sample(shuffleMeta$conditions)
 
@@ -278,14 +302,14 @@ for (file in all_files) {
     ttestpvals<-cbind(ttestpvals, ttestresults$pval)
     wilcoxresults<-calcWilcox(NormcountsT, shuffleMeta)
     wilcoxpvals<-cbind(wilcoxpvals, wilcoxresults$pval)
-    deseq2results<-calcDESeq2(RawcountsT, shuffleMeta)
+    deseq2results<-calcDESeq2(ResampledcountsT, shuffleMeta)
     deseq2pvals<-cbind(deseq2pvals, deseq2results$pval)
-    edgerresults<-calcEdgeR(RawcountsT, shuffleMeta)
+    edgerresults<-calcEdgeR(ResampledcountsT, shuffleMeta)
     edgerpvals<-cbind(edgerpvals, edgerresults$pval)
   }
 
-  rownames(ttestpvals)<-rownames(NormcountsT)
-  rownames(wilcoxpvals)<-rownames(NormcountsT)
+  rownames(ttestpvals)<-rownames(RawcountsT)
+  rownames(wilcoxpvals)<-rownames(RawcountsT)
   rownames(deseq2pvals)<-rownames(RawcountsT)
   rownames(edgerpvals)<-rownames(RawcountsT)
 

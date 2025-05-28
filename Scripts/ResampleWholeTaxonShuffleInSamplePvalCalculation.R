@@ -12,6 +12,12 @@ all_files<-list.files("CountsTables/RDPRaw", pattern = "*.txt",full.names = TRUE
 for (file in all_files) {
   name <- gsub(basename(file), pattern=".txt$", replacement="")
   RawcountsT<-read.table(paste0("CountsTables/RDPRaw/", name, ".txt"), sep = "\t", header = T, row.names = 1, check.names = F)
+  # Filter out low counts taxa
+  if (all(which(rowMeans(RawcountsT)<2) == 0)) {
+    RawcountsT<-RawcountsT
+  } else {
+    RawcountsT<-RawcountsT[-c(which(rowMeans(RawcountsT)<2)), , drop = F]
+  }
   meta<-read.table(paste0("MetaData/metadata_", gsub(basename(file), pattern=".txt$", replacement=""), ".txt"),
                    header = T, row.names = 1)
   meta<-meta[intersect(colnames(RawcountsT), rownames(meta)), , drop = F]
@@ -90,6 +96,12 @@ all_files<-list.files("CountsTables/dada2Raw", pattern = "*.txt",full.names = TR
 for (file in all_files) {
   name <- gsub(basename(file), pattern=".txt$", replacement="")
   RawcountsT<-read.table(paste0("CountsTables/dada2Raw/", name, ".txt"), sep = "\t", header = T, row.names = 1, check.names = F)
+  # Filter out low counts taxa
+  if (all(which(rowMeans(RawcountsT)<2) == 0)) {
+    RawcountsT<-RawcountsT
+  } else {
+    RawcountsT<-RawcountsT[-c(which(rowMeans(RawcountsT)<2)), , drop = F]
+  }
   meta<-read.table(paste0("MetaData/metadata_", gsub(basename(file), pattern=".txt$", replacement=""), ".txt"),
                    header = T, row.names = 1)
   meta<-meta[intersect(colnames(RawcountsT), rownames(meta)), , drop = F]
@@ -168,6 +180,12 @@ all_files<-list.files("CountsTables/WGSRaw", pattern = "*.txt",full.names = TRUE
 for (file in all_files) {
   name <- gsub(basename(file), pattern=".txt$", replacement="")
   RawcountsT<-read.table(paste0("CountsTables/WGSRaw/", name, ".txt"), sep = "\t", header = T, row.names = 1, check.names = F)
+  # Filter out low counts taxa
+  if (all(which(rowMeans(RawcountsT)<2) == 0)) {
+    RawcountsT<-RawcountsT
+  } else {
+    RawcountsT<-RawcountsT[-c(which(rowMeans(RawcountsT)<2)), , drop = F]
+  }
   meta<-read.table(paste0("MetaData/metadata_", gsub(basename(file), pattern=".txt$", replacement=""), ".txt"),
                    header = T, row.names = 1)
   meta<-meta[intersect(colnames(RawcountsT), rownames(meta)), , drop = F]
@@ -246,6 +264,12 @@ all_files<-list.files("CountsTables/RNAseqRaw", pattern = "*.txt",full.names = T
 for (file in all_files) {
   name <- gsub(basename(file), pattern=".txt$", replacement="")
   RawcountsT<-read.table(paste0("CountsTables/RNAseqRaw/", name, ".txt"), sep = "\t", header = T, row.names = 1, check.names = F)
+  # Filter out low counts taxa
+  if (all(which(rowMeans(RawcountsT)<2) == 0)) {
+    RawcountsT<-RawcountsT
+  } else {
+    RawcountsT<-RawcountsT[-c(which(rowMeans(RawcountsT)<2)), , drop = F]
+  }
   meta<-read.table(paste0("MetaData/metadata_", gsub(basename(file), pattern=".txt$", replacement=""), ".txt"),
                    header = T, row.names = 1)
   meta<-meta[intersect(colnames(RawcountsT), rownames(meta)), , drop = F]
