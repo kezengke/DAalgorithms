@@ -33,20 +33,19 @@ for (file in all_files) {
   deseq2pvals<-c()
   edgerpvals<-c()
   for (i in 1:100) {
-
-    shuffledCountsT<-apply(RawcountsT, 2, sample)
-
     # resample
-    ResampledcountsT<-resampleRNORM(shuffledCountsT, meta, 1)
-    NormCountsT<-normFun(ResampledcountsT)
+    ResampledcountsT<-resampleRNORM(RawcountsT, meta, 1)
+
+    shuffledCountsT<-apply(ResampledcountsT, 2, sample)
+    NormCountsT<-normFun(shuffledCountsT)
 
     ttestresults<-calcTtest(NormCountsT, meta)
     ttestpvals<-cbind(ttestpvals, ttestresults$pval)
     wilcoxresults<-calcWilcox(NormCountsT, meta)
     wilcoxpvals<-cbind(wilcoxpvals, wilcoxresults$pval)
-    deseq2results<-calcDESeq2(ResampledcountsT, meta)
+    deseq2results<-calcDESeq2(shuffledCountsT, meta)
     deseq2pvals<-cbind(deseq2pvals, deseq2results$pval)
-    edgerresults<-calcEdgeR(ResampledcountsT, meta)
+    edgerresults<-calcEdgeR(shuffledCountsT, meta)
     edgerpvals<-cbind(edgerpvals, edgerresults$pval)
   }
 
@@ -114,20 +113,19 @@ for (file in all_files) {
   deseq2pvals<-c()
   edgerpvals<-c()
   for (i in 1:100) {
-
-    shuffledCountsT<-apply(RawcountsT, 2, sample)
-
     # resample
-    ResampledcountsT<-resampleRNORM(shuffledCountsT, meta, 1)
-    NormCountsT<-normFun(ResampledcountsT)
+    ResampledcountsT<-resampleRNORM(RawcountsT, meta, 1)
+
+    shuffledCountsT<-apply(ResampledcountsT, 2, sample)
+    NormCountsT<-normFun(shuffledCountsT)
 
     ttestresults<-calcTtest(NormCountsT, meta)
     ttestpvals<-cbind(ttestpvals, ttestresults$pval)
     wilcoxresults<-calcWilcox(NormCountsT, meta)
     wilcoxpvals<-cbind(wilcoxpvals, wilcoxresults$pval)
-    deseq2results<-calcDESeq2(ResampledcountsT, meta)
+    deseq2results<-calcDESeq2(shuffledCountsT, meta)
     deseq2pvals<-cbind(deseq2pvals, deseq2results$pval)
-    edgerresults<-calcEdgeR(ResampledcountsT, meta)
+    edgerresults<-calcEdgeR(shuffledCountsT, meta)
     edgerpvals<-cbind(edgerpvals, edgerresults$pval)
   }
 
@@ -196,20 +194,19 @@ for (file in all_files) {
   deseq2pvals<-c()
   edgerpvals<-c()
   for (i in 1:100) {
-
-    shuffledCountsT<-apply(RawcountsT, 2, sample)
-
     # resample
-    ResampledcountsT<-resampleRNORM(shuffledCountsT, meta, 1)
-    NormCountsT<-normFun(ResampledcountsT)
+    ResampledcountsT<-resampleRNORM(RawcountsT, meta, 1)
+
+    shuffledCountsT<-apply(ResampledcountsT, 2, sample)
+    NormCountsT<-normFun(shuffledCountsT)
 
     ttestresults<-calcTtest(NormCountsT, meta)
     ttestpvals<-cbind(ttestpvals, ttestresults$pval)
     wilcoxresults<-calcWilcox(NormCountsT, meta)
     wilcoxpvals<-cbind(wilcoxpvals, wilcoxresults$pval)
-    deseq2results<-calcDESeq2(ResampledcountsT, meta)
+    deseq2results<-calcDESeq2(shuffledCountsT, meta)
     deseq2pvals<-cbind(deseq2pvals, deseq2results$pval)
-    edgerresults<-calcEdgeR(ResampledcountsT, meta)
+    edgerresults<-calcEdgeR(shuffledCountsT, meta)
     edgerpvals<-cbind(edgerpvals, edgerresults$pval)
   }
 
@@ -278,20 +275,19 @@ for (file in all_files) {
   deseq2pvals<-c()
   edgerpvals<-c()
   for (i in 1:100) {
-
-    shuffledCountsT<-apply(RawcountsT, 2, sample)
-
     # resample
-    ResampledcountsT<-resampleRNORM(shuffledCountsT, meta, 1)
-    NormCountsT<-normFun(ResampledcountsT)
+    ResampledcountsT<-resampleRNORM(RawcountsT, meta, 1)
+
+    shuffledCountsT<-apply(ResampledcountsT, 2, sample)
+    NormCountsT<-normFun(shuffledCountsT)
 
     ttestresults<-calcTtest(NormCountsT, meta)
     ttestpvals<-cbind(ttestpvals, ttestresults$pval)
     wilcoxresults<-calcWilcox(NormCountsT, meta)
     wilcoxpvals<-cbind(wilcoxpvals, wilcoxresults$pval)
-    deseq2results<-calcDESeq2(ResampledcountsT, meta)
+    deseq2results<-calcDESeq2(shuffledCountsT, meta)
     deseq2pvals<-cbind(deseq2pvals, deseq2results$pval)
-    edgerresults<-calcEdgeR(ResampledcountsT, meta)
+    edgerresults<-calcEdgeR(shuffledCountsT, meta)
     edgerpvals<-cbind(edgerpvals, edgerresults$pval)
   }
 
