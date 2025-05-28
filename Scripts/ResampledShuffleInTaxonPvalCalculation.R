@@ -35,9 +35,11 @@ for (file in all_files) {
   for (i in 1:100) {
     shuffledCountsT<-apply(RawcountsT, 1, sample)
     shuffledCountsT<-data.frame(t(shuffledCountsT))
+    rownames(shuffledCountsT) <- rownames(RawcountsT)
+    colnames(shuffledCountsT) <- colnames(RawcountsT)
+
     # resample
     ResampledcountsT<-resampleRNORM(shuffledCountsT, meta, 1)
-    colnames(ResampledcountsT)<-colnames(RawcountsT)
     NormCountsT<-normFun(ResampledcountsT)
 
     ttestresults<-calcTtest(NormCountsT, meta)
@@ -117,9 +119,11 @@ for (file in all_files) {
   for (i in 1:100) {
     shuffledCountsT<-apply(RawcountsT, 1, sample)
     shuffledCountsT<-data.frame(t(shuffledCountsT))
+    rownames(shuffledCountsT) <- rownames(RawcountsT)
+    colnames(shuffledCountsT) <- colnames(RawcountsT)
+
     # resample
     ResampledcountsT<-resampleRNORM(shuffledCountsT, meta, 1)
-    colnames(ResampledcountsT)<-colnames(RawcountsT)
     NormCountsT<-normFun(ResampledcountsT)
 
     ttestresults<-calcTtest(NormCountsT, meta)
@@ -199,9 +203,11 @@ for (file in all_files) {
   for (i in 1:100) {
     shuffledCountsT<-apply(RawcountsT, 1, sample)
     shuffledCountsT<-data.frame(t(shuffledCountsT))
+    rownames(shuffledCountsT) <- rownames(RawcountsT)
+    colnames(shuffledCountsT) <- colnames(RawcountsT)
+
     # resample
     ResampledcountsT<-resampleRNORM(shuffledCountsT, meta, 1)
-    colnames(ResampledcountsT)<-colnames(RawcountsT)
     NormCountsT<-normFun(ResampledcountsT)
 
     ttestresults<-calcTtest(NormCountsT, meta)
@@ -291,9 +297,11 @@ for (file in all_files) {
   for (i in 1:100) {
     shuffledCountsT<-apply(RawcountsT, 1, sample)
     shuffledCountsT<-data.frame(t(shuffledCountsT))
+    rownames(shuffledCountsT) <- rownames(RawcountsT)
+    colnames(shuffledCountsT) <- colnames(RawcountsT)
+
     # resample
     ResampledcountsT<-resampleRNORM(shuffledCountsT, meta, 1)
-    colnames(ResampledcountsT)<-colnames(RawcountsT)
     NormCountsT<-normFun(ResampledcountsT)
 
     ttestresults<-calcTtest(NormCountsT, meta)

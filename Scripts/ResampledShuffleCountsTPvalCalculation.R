@@ -37,11 +37,11 @@ for (file in all_files) {
     shuffledCountsT <- matrix(shuffled_values, nrow = nrow(RawcountsT), ncol = ncol(RawcountsT))
     shuffledCountsT <- as.data.frame(shuffledCountsT)
 
+    rownames(shuffledCountsT) <- rownames(RawcountsT)
+    colnames(shuffledCountsT) <- colnames(RawcountsT)
+
     # resample
     ResampledcountsT<-resampleRNORM(shuffledCountsT, meta, 1)
-
-    rownames(ResampledcountsT) <- rownames(RawcountsT)
-    colnames(ResampledcountsT) <- colnames(RawcountsT)
 
     NormCountsT<-normFun(ResampledcountsT)
 
@@ -124,11 +124,11 @@ for (file in all_files) {
     shuffledCountsT <- matrix(shuffled_values, nrow = nrow(RawcountsT), ncol = ncol(RawcountsT))
     shuffledCountsT <- as.data.frame(shuffledCountsT)
 
+    rownames(shuffledCountsT) <- rownames(RawcountsT)
+    colnames(shuffledCountsT) <- colnames(RawcountsT)
+
     # resample
     ResampledcountsT<-resampleRNORM(shuffledCountsT, meta, 1)
-
-    rownames(ResampledcountsT) <- rownames(RawcountsT)
-    colnames(ResampledcountsT) <- colnames(RawcountsT)
 
     NormCountsT<-normFun(ResampledcountsT)
 
@@ -211,11 +211,11 @@ for (file in all_files) {
     shuffledCountsT <- matrix(shuffled_values, nrow = nrow(RawcountsT), ncol = ncol(RawcountsT))
     shuffledCountsT <- as.data.frame(shuffledCountsT)
 
+    rownames(shuffledCountsT) <- rownames(RawcountsT)
+    colnames(shuffledCountsT) <- colnames(RawcountsT)
+
     # resample
     ResampledcountsT<-resampleRNORM(shuffledCountsT, meta, 1)
-
-    rownames(ResampledcountsT) <- rownames(RawcountsT)
-    colnames(ResampledcountsT) <- colnames(RawcountsT)
 
     NormCountsT<-normFun(ResampledcountsT)
 
@@ -298,11 +298,11 @@ for (file in all_files) {
     shuffledCountsT <- matrix(shuffled_values, nrow = nrow(RawcountsT), ncol = ncol(RawcountsT))
     shuffledCountsT <- as.data.frame(shuffledCountsT)
 
+    rownames(shuffledCountsT) <- rownames(RawcountsT)
+    colnames(shuffledCountsT) <- colnames(RawcountsT)
+
     # resample
     ResampledcountsT<-resampleRNORM(shuffledCountsT, meta, 1)
-
-    rownames(ResampledcountsT) <- rownames(RawcountsT)
-    colnames(ResampledcountsT) <- colnames(RawcountsT)
 
     NormCountsT<-normFun(ResampledcountsT)
 
