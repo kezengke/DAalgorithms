@@ -18,7 +18,8 @@ makePlot <- function(fractT, classifier, name, shuffleType) {
          x = "DAA methods",
          y = "Fraction of significant results") +
     theme(axis.text.x = element_text(angle = 45, hjust = 1),
-          legend.position = "none")
+          legend.position = "none") +
+    ylim(0, 0.8)
 
   return(p)
 }
